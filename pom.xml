@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.miniorange.sso.oauth</groupId>
+    <artifactId>sso-crowd-oauth</artifactId>
+    <version>2.0.0</version>
+
+    <organization>
+        <name>miniOrange</name>
+        <url>http://www.miniorange.com/</url>
+    </organization>
+
+    <name>OAuth Single Sign On for Crowd</name>
+    <description>This is an OAuth Single Sign-On (SSO) plugin for Atlassian Crowd, integrated Atlassian applications, Jenkins, SonarQube, and Nexus, enabling seamless user authentication across platforms.</description>
+    <packaging>atlassian-plugin</packaging>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.atlassian.crowd</groupId>
+                <artifactId>atlassian-crowd</artifactId>
+                <version>${crowd.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.crowd</groupId>
+                <artifactId>crowd-server</artifactId>
+                <version>${crowd.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.crowd</groupId>
+            <artifactId>crowd-server</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.crowd</groupId>
+            <artifactId>crowd-server-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.opensaml</groupId>-->
+<!--            <artifactId>opensaml</artifactId>-->
+<!--            <version>2.6.4</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>xalan</groupId>-->
+<!--                    <artifactId>xalan</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>xerces</groupId>-->
+<!--                    <artifactId>xercesImpl</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>xalan</groupId>-->
+<!--                    <artifactId>serializer</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>xml-resolver</groupId>-->
+<!--                    <artifactId>xml-resolver</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>xml-apis</groupId>-->
+<!--                    <artifactId>xml-apis</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>commons-collections</groupId>-->
+<!--                    <artifactId>commons-collections</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.velocity</groupId>-->
+<!--                    <artifactId>velocity</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.owasp.esapi</groupId>-->
+<!--                    <artifactId>esapi</artifactId>-->
+<!--                </exclusion>-->
+
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-osgi-javaconfig</artifactId>
+            <version>${osgi.javaconfig.version}</version>
+        </dependency>
+        <!-- OSGi Java Config dependencies -->
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.framework</artifactId>
+            <version>4.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- WIRED TEST RUNNER DEPENDENCIES -->
+        <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-osgi-testrunner</artifactId>
+            <version>${plugin.testrunner.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2-atlassian-1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.templaterenderer</groupId>
+            <artifactId>atlassian-template-renderer-api</artifactId>
+            <version>5.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.15.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${org.slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.json</groupId>
+            <artifactId>atlassian-json-jsonorg</artifactId>
+            <version>0.9</version>
+        </dependency>
+
+
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.crypto.tink</groupId>
+            <artifactId>tink</artifactId>
+            <version>1.16.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>oauth2-oidc-sdk</artifactId>
+            <version>11.23.1</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.crypto.tink</groupId>
+                    <artifactId>tink</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.nimbusds</groupId>-->
+<!--            <artifactId>oauth2-oidc-sdk</artifactId>-->
+<!--            <version>9.42</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>crowd-maven-plugin</artifactId>
+                <version>${amps.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <productVersion>${crowd.version}</productVersion>
+                    <productDataVersion>${crowd.data.version}</productDataVersion>
+                    <enableQuickReload>true</enableQuickReload>
+<!--                    <banningExcludes>-->
+<!--                        <exclude>com.google.guava:guava</exclude>-->
+<!--                        <exclude>org.slf4j:jcl-over-slf4j</exclude>-->
+<!--                        <exclude>org.slf4j:jul-to-slf4j</exclude>-->
+<!--                    </banningExcludes>-->
+
+                    <!-- See here for an explanation of default instructions: -->
+                    <!-- https://developer.atlassian.com/docs/advanced-topics/configuration-of-instructions-in-atlassian-plugins -->
+                    <instructions>
+                        <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
+                        <!-- Check why this is used -->
+                        <!--                        &lt;!&ndash; Add package to export here &ndash;&gt;-->
+                        <!--                        <Export-Package>-->
+                        <!--                            com.miniorange.sso.saml.api,-->
+                        <!--                        </Export-Package>-->
+
+                        <!-- Add package import here -->
+                        <Import-Package>
+                            org.springframework.osgi.*;resolution:="optional",
+                            com.atlassian.crowd.manager.authentication.*;resolution:="optional",
+                            com.atlassian.crowd.integration.*;resolution:="optional",
+                            !org.joda.*,
+                            !org.owasp.esapi,
+                            !org.apache.xpath.*,
+                            !org.apache.xml.dtm,
+                            !org.apache.xpath.compiler,
+                            !com.sun.crypto.provider,
+                            !org.apache.xml.utils,
+                            !sun.activation.registries,
+                            !com.sun.net.ssl.*,
+                            !com.sun.activation.registries,
+                            !org.bouncycastle.x509.*,
+                            !org.jsoup.*,
+                            !com.google.*,
+                            !jakarta.servlet.*,
+                            !net.shibboleth.*,
+                            !org.cryptomator.*,
+                            !org.opensaml.*,
+                            !sun.security.x509,
+                            !com.auth0.*,
+                            !com.atlassian.json*,
+                            *
+                        </Import-Package>
+
+                        <!-- Ensure plugin is spring powered -->
+                        <Spring-Context>*</Spring-Context>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <crowd.version>5.3.3</crowd.version>
+        <crowd.data.version>5.3.3</crowd.data.version>
+        <amps.version>8.0.0</amps.version>
+        <plugin.testrunner.version>2.0.2</plugin.testrunner.version>
+        <atlassian.spring.scanner.version>1.2.13</atlassian.spring.scanner.version>
+        <osgi.javaconfig.version>0.6.0</osgi.javaconfig.version>
+        <spring.version>5.3.37</spring.version>
+        <org.slf4j.version>2.0.13</org.slf4j.version>
+        <!-- This property ensures consistency between the key in atlassian-plugin.xml and the OSGi bundle's key. -->
+        <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+</project>
